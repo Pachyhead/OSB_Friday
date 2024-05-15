@@ -72,6 +72,17 @@
             android:textStyle="bold"
             android:textColor="#000000"/>
 
+        <ImageButton
+            android:id="@+id/btn_to_Week_Menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:src="@drawable/mingcute_more_1_line"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_margin="10dp">
+        </ImageButton>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="310dp"
             android:layout_height="240dp"
