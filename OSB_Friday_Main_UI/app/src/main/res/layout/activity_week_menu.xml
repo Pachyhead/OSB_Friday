@@ -97,6 +97,17 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ListView
+                        android:id="@+id/Weekly_Menu_Monday_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
+                </LinearLayout>
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/Weekly_Menu_Tuesday"
@@ -117,6 +128,17 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ListView
+                        android:id="@+id/Weekly_Menu_Tuesday_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
+                </LinearLayout>
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/Weekly_Menu_Wednesday"
@@ -137,6 +159,17 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ListView
+                        android:id="@+id/Weekly_Menu_Wednesday_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
+                </LinearLayout>
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/Weekly_Menu_Thursday"
@@ -157,6 +190,17 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ListView
+                        android:id="@+id/Weekly_Menu_Thursday_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
+                </LinearLayout>
             </FrameLayout>
             <FrameLayout
                 android:id="@+id/Weekly_Menu_Friday"
@@ -177,6 +221,17 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:textColor="#000000"/>
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="270dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp">
+                    <ListView
+                        android:id="@+id/Weekly_Menu_Friday_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </ListView>
+                </LinearLayout>
             </FrameLayout>
 
         </LinearLayout>
