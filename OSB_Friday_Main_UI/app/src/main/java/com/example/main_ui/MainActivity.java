@@ -17,20 +17,30 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class MainActivity extends AppCompatActivity implements Scraping.OnScrapingCompleteListener{
     private LinearLayout selectionLayout;
     private ConstraintLayout menuDisplayLayout;
     private TextView[] menuTextViews;
-    private String[] breakfastMenu;
-    private String[] lunchMenu;
-    private String[] dinnerMenu;
+    private MenuFileManager menuFileManager;
+
+    //저장할 파일들
+    private static final String BREAKFAST_FILE = "breakfast_menu.txt";
+    private static final String LUNCH_FILE = "lunch_menu.txt";
+    private static final String DINNER_FILE = "dinner_menu.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        //파일 읽고 쓰기
+
+        menuFileManager = new MenuFileManager(this);
         //스크레이핑
         new Scraping(this, "breakfast").execute();
         new Scraping(this, "lunch").execute();
@@ -54,25 +64,25 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
         Button buttonDinner = findViewById(R.id.button_dinner);
         Button buttonBack = findViewById(R.id.button_back);
 
-        //onScrapingComplete로 받아온 메뉴를 각각 메뉴 버튼을 누르면 불러옴, back 버튼은 다시 선택창으로
-        buttonBreakfast.setOnClickListener(v -> showMenu(breakfastMenu));
-        buttonLunch.setOnClickListener(v -> showMenu(lunchMenu));
-        buttonDinner.setOnClickListener(v -> showMenu(dinnerMenu));
+        //저장된 파일을 읽어 출력
+        buttonBreakfast.setOnClickListener(v -> loadAndShowMenu(BREAKFAST_FILE));
+        buttonLunch.setOnClickListener(v -> loadAndShowMenu(LUNCH_FILE));
+        buttonDinner.setOnClickListener(v -> loadAndShowMenu(DINNER_FILE));
         buttonBack.setOnClickListener(v -> showSelectionScreen());
 
 
 
     }
     //메뉴 출력
-    private void showMenu(String[] menu) {
-        selectionLayout.setVisibility(View.GONE);
-        menuDisplayLayout.setVisibility(View.VISIBLE);
-
-        if (menu != null) {
-            for (int i = 0; i < menu.length; i++) {
-                menuTextViews[i].setText(menu[i]);
+    private void loadAndShowMenu(String fileName) {
+        menuFileManager.loadFromFile(fileName, result -> {
+            selectionLayout.setVisibility(View.GONE);
+            menuDisplayLayout.setVisibility(View.VISIBLE);
+            String[] menu = result.split("\n");
+            for (int i = 0; i < menuTextViews.length; i++) {
+                menuTextViews[i].setText(menu.length > i ? menu[i] : "");
             }
-        }
+        });
     }
 
     //메뉴 선택창 출력
@@ -84,14 +94,18 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
     // 스크래이핑 결과를 각각의 변수에 넘김.
     @Override
     public void onScrapingComplete(String[] result, String mealType) {
-        if ("breakfast".equals(mealType)) {
-            breakfastMenu = result;
-        } else if ("lunch".equals(mealType)) {
-            lunchMenu = result;
-        } else if ("dinner".equals(mealType)) {
-            dinnerMenu = result;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String menu : result) {
+            stringBuilder.append(menu).append("\n");
         }
 
+        if ("breakfast".equals(mealType)) {
+            menuFileManager.saveToFile(BREAKFAST_FILE, stringBuilder.toString());
+        } else if ("lunch".equals(mealType)) {
+            menuFileManager.saveToFile(LUNCH_FILE, stringBuilder.toString());
+        } else if ("dinner".equals(mealType)) {
+            menuFileManager.saveToFile(DINNER_FILE, stringBuilder.toString());
+        }
     }
 }
 
