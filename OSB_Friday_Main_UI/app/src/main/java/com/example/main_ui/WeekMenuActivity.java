@@ -14,11 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 public class WeekMenuActivity extends AppCompatActivity {
 
     private ListView[] weekMenuListArr = new ListView[5];
-    private int[] menuListViewIds = {R.id.Weekly_Menu_Monday_list,
-                                 R.id.Weekly_Menu_Tuesday_list,
-                                 R.id.Weekly_Menu_Wednesday_list,
-                                 R.id.Weekly_Menu_Thursday_list,
-                                 R.id.Weekly_Menu_Friday_list};
+    private int[] menuListViewIds = {
+            R.id.Weekly_Menu_Monday_list,
+            R.id.Weekly_Menu_Tuesday_list,
+            R.id.Weekly_Menu_Wednesday_list,
+            R.id.Weekly_Menu_Thursday_list,
+            R.id.Weekly_Menu_Friday_list
+    };
     private ArrayAdapter<String>[] menuAdapters = new ArrayAdapter[5];
 
     @Override
@@ -32,24 +34,24 @@ public class WeekMenuActivity extends AppCompatActivity {
             return insets;
         });
 
-        String[][] menuDatabase = new String[5][0];
+        String[] meals = {
+                "Pasta Salad Soup Bread", // Monday
+                "Chicken Rice Beans Dessert", // Tuesday
+                "Fish Chips Peas", // Wednesday
+                "Beef MashedPotatoes Gravy Pie", // Thursday
+                "Pizza Fries Soda IceCream" // Friday
+        };
 
-        for(int i = 0; i < 5; i++) {
+        String[][] menuDatabase = new String[5][];
+        for (int i = 0; i < meals.length; i++) {
+            menuDatabase[i] = meals[i].split(" ");
+        }
+
+        for (int i = 0; i < 5; i++) {
             weekMenuListArr[i] = findViewById(menuListViewIds[i]);
             menuAdapters[i] = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1, menuDatabase[i]);
             weekMenuListArr[i].setAdapter(menuAdapters[i]);
-        }
-
-        //updateMenuListData
-    }
-
-    private void updateMenuListData(int index, String[] newData) {
-        if (index >= 0 && index < menuAdapters.length) {
-            ArrayAdapter<String> adapter = menuAdapters[index];
-            adapter.clear();
-            adapter.addAll(newData);
-            adapter.notifyDataSetChanged();
         }
     }
 }
