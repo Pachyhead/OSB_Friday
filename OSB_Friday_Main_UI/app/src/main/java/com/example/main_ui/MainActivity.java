@@ -20,8 +20,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.example.main_ui.Scraping; // 스크레이핑 import
 
 public class MainActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
