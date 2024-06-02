@@ -44,9 +44,43 @@ public class MainActivity extends AppCompatActivity {
         btnUserSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 디버깅용: 버튼 클릭시 유저 정보 토스트
+                Properties userInfo = loadUserInfo();
+                if (userInfo.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "No user info found", Toast.LENGTH_SHORT).show();
+                } else {
+                    StringBuilder userInfoString = new StringBuilder();
+                    for (String key : userInfo.stringPropertyNames()) {
+                        userInfoString.append(key).append(": ").append(userInfo.getProperty(key)).append("\n");
+                    }
+                    showUserInfoDialog(userInfoString.toString());
+                }
+
                 Intent intent = new Intent(MainActivity.this, ActivityUserInfo.class);
                 startActivity(intent);
             }
         });
+    }
+    private Properties loadUserInfo() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = openFileInput("user_info.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
+
+    private void showUserInfoDialog(String userInfo) {
+        new AlertDialog.Builder(this)
+                .setTitle("User Info")
+                .setMessage(userInfo)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }
