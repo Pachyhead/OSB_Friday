@@ -1,5 +1,7 @@
 package com.example.main_ui;
 
+import android.content.Context;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -9,12 +11,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Scraping {
+    private Context context;
+
+    public Scraping(Context context) {
+        this.context = context;
+    }
+
     public void Scrapingresult() {
         try {
-            Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get(); //학식 사이트 웹스크롤링
+            Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/gi").get(); //학식 사이트 웹스크롤링
 
             // Save the HTML content to a local file
-            File fileBreakfast = new File("tmp/result1.txt"); //한빛식당 아침 메뉴 데이터를 result1.txt로 저장
+            File fileBreakfast = new File(context.getFilesDir(), "result1.txt"); //한빛식당 아침 메뉴 데이터를 result1.txt로 저장
             if(fileBreakfast.createNewFile());
             Elements element1 = doc.select(".menu[data-table^=18-9]");
             if (element1 != null) {
@@ -25,7 +33,7 @@ public class Scraping {
                 writer1.close();
             }
 
-            File fileLunch = new File("tmp/result2.txt"); //한빛식당 점심 메뉴 데이터
+            File fileLunch = new File(context.getFilesDir(), "result2.txt"); //한빛식당 점심 메뉴 데이터
             if (fileLunch.createNewFile());
             Elements element2 = doc.select(".menu[data-table^=18-8]");
             if (element2 != null) {
@@ -36,7 +44,7 @@ public class Scraping {
                 writer2.close();
             }
 
-            File fileDinner = new File("tmp/result3.txt"); //한빛식당 저녁 메뉴 데이터
+            File fileDinner = new File(context.getFilesDir(), "result3.txt"); //한빛식당 저녁 메뉴 데이터
             if (fileDinner.createNewFile());
             Elements element3 = doc.select(".menu[data-table^=18-10]");
             if (element3 != null) {
