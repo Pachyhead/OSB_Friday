@@ -15,6 +15,12 @@
         android:theme="@style/Theme.Main_UI"
         tools:targetApi="31">
         <activity
+            android:name=".ActivityUserInfo"
+            android:exported="false" />
+        <activity
+            android:name=".WeekMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

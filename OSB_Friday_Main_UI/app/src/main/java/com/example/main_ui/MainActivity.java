@@ -1,5 +1,6 @@
 package com.example.main_ui;
 
+import android.content.DialogInterface;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +10,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
@@ -21,6 +25,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import com.example.main_ui.Scraping; // 스크레이핑 import
 
 public class MainActivity extends AppCompatActivity implements Scraping.OnScrapingCompleteListener{
     private LinearLayout selectionLayout;
@@ -45,6 +54,14 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
         new Scraping(this, "breakfast").execute();
         new Scraping(this, "lunch").execute();
         new Scraping(this, "dinner").execute();
+        ImageButton btnToWeekMenu = findViewById(R.id.btn_to_Week_Menu);
+        btnToWeekMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WeekMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //레이아웃 불러오기. selectionLayout: 버튼 선택. menuDisplayLayout: 메뉴 출력
         selectionLayout = findViewById(R.id.selection_layout);
@@ -81,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
             String[] menu = result.split("\n");
             for (int i = 0; i < menuTextViews.length; i++) {
                 menuTextViews[i].setText(menu.length > i ? menu[i] : "");
+            }
+        });
+        ImageButton btnUserSetting = findViewById(R.id.btn_user_setting);
+        btnUserSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityUserInfo.class);
+                startActivity(intent);
             }
         });
     }
