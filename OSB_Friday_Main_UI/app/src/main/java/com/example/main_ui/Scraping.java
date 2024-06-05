@@ -31,15 +31,9 @@ public class Scraping extends AsyncTask<Void, Void, String[]> {
             Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get();
             Elements elements = null;
             //[data-table이 18-9로 시작하는, 아침 정보만 저장
-            if (mealType.equals("breakfast")) {
-                elements = doc.select(".menu[data-table^=18-9]");
-            }
-             if (mealType.equals("lunch")){
-                elements = doc.select(".menu[data-table^=18-8]");
-            }
-            if (mealType.equals("dinner")){
-                elements = doc.select(".menu[data-table^=18-10]");
-            }
+
+            elements = doc.select(".menu[data-table^=18-8]");
+
 
             //반복문의 반복 횟수(일주일은 5일이므로 5)
             int count = 5;

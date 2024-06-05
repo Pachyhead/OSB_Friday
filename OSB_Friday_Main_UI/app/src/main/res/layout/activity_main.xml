@@ -120,6 +120,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_monday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Your Text1"
+                app:layout_constraintStart_toEndOf="@+id/rec1_inner1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rec1_inner1"
+                android:layout_marginStart="8dp"/>
 
             <TextView
                 android:id="@+id/rec1_inner2"
@@ -133,6 +142,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_tuesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Your Text"
+                app:layout_constraintStart_toEndOf="@+id/rec1_inner2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rec1_inner2"
+                android:layout_marginStart="8dp"/>
 
             <TextView
                 android:id="@+id/rec1_inner3"
@@ -146,6 +164,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_wednesday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Your Text3"
+                app:layout_constraintStart_toEndOf="@+id/rec1_inner3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rec1_inner3"
+                android:layout_marginStart="8dp"/>
 
             <TextView
                 android:id="@+id/rec1_inner4"
@@ -159,6 +186,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_thursday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Your Text4"
+                app:layout_constraintStart_toEndOf="@+id/rec1_inner4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rec1_inner4"
+                android:layout_marginStart="8dp"/>
 
             <TextView
                 android:id="@+id/rec1_inner5"
@@ -172,54 +208,17 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
+            <TextView
+                android:id="@+id/text_friday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Your Text5"
+                app:layout_constraintStart_toEndOf="@+id/rec1_inner5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/rec1_inner5"
+                android:layout_marginStart="8dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-            android:textColor="#000000"
-            android:shadowColor="#000000"
-            android:shadowDx="1"
-            android:shadowDy="-1"
-            android:shadowRadius="4"/>
-
-        <!--버튼 추가-->
-        <LinearLayout
-            android:id="@+id/selection_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-
-            <Button
-                android:id="@+id/button_breakfast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#87ceeb"
-                android:text="한빛식당 아침"/>
-
-            <Button
-                android:id="@+id/button_lunch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#87ceeb"
-                android:text="한빛식당 점심"/>
-
-            <Button
-                android:id="@+id/button_dinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#87ceeb"
-                android:text="한빛식당 저녁"/>
-
-        </LinearLayout>
-        <!--버튼을 누르면 activity_menu_display를 불러옴-->
-        <include
-            android:id="@+id/menu_display_layout"
-            layout="@layout/activity_menu_display"
-            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
