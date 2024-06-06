@@ -1,11 +1,14 @@
-
 package com.example.main_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.graphics.Insets;
@@ -38,6 +41,9 @@ public class WeekMenuActivity extends AppCompatActivity {
             return insets;
         });
 
+        Intent intent = getIntent();
+        String[] mealsArray = intent.getStringArrayExtra("meals");
+        String[] caloriesArray = intent.getStringArrayExtra("calories");
         // Initialize meals and calories arrays with default values
         meals[0] = new String[]{"Pasta", "Salad", "Soup", "Bread"}; // Monday
         calories[0] = new String[]{"400", "150", "100", "200"}; // Monday
@@ -51,9 +57,13 @@ public class WeekMenuActivity extends AppCompatActivity {
         meals[3] = new String[]{"Beef", "MashedPotatoes", "Gravy", "Pie"}; // Thursday
         calories[3] = new String[]{"600", "300", "100", "400"}; // Thursday
 
-        meals[4] = new String[]{"Pizza", "Fries", "Soda", "IceCream"}; // Friday
+         meals[4] = new String[]{"Pizza", "Fries", "Soda", "IceCream"}; // Friday
         calories[4] = new String[]{"700", "350", "150", "500"}; // Friday
 
+        for (int i = 0; i < 5; i++) {
+            if(mealsArray == null ) break;
+            meals[i] = mealsArray[i].split(" ");
+        }
         for (int i = 0; i < 5; i++) {
             weekMenuListArr[i] = findViewById(menuListViewIds[i]);
             List<MenuItem> menuItems = new ArrayList<>();

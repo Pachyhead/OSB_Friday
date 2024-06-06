@@ -1,54 +1,78 @@
 package com.example.main_ui;
 
+import android.os.AsyncTask;
+import android.util.Log;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
-public class Scraping {
-    public void Scrapingresult() {
+//백그라운드 실행을 하는 AsynTask
+public class Scraping extends AsyncTask<Void, Void, String[]> {
+
+    // Scraping 종료 시 알리기 위한 listener
+    private OnScrapingCompleteListener listener;
+    private String mealType;
+
+    //listener의 생성자
+    public Scraping(OnScrapingCompleteListener listener, String mealType) {
+        this.listener = listener;
+        this.mealType = mealType;
+    }
+
+    @Override
+    //백그라운드에서 실행되는 메소드
+    protected String[] doInBackground(Void... voids) {
+        //요일별 정보 저장하기 위한 String 배열
+        String[] weeksBreakfast = new String[]{"", "", "", "", ""};
         try {
-            Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get(); //학식 사이트 웹스크롤링
+            // 학식 사이트 스크레이핑
+            Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get();
+            Elements elements = null;
 
-            // Save the HTML content to a local file
-            File fileBreakfast = new File("tmp/result1.txt"); //한빛식당 아침 메뉴 데이터를 result1.txt로 저장
-            if(fileBreakfast.createNewFile());
-            Elements element1 = doc.select(".menu[data-table^=18-9]");
-            if (element1 != null) {
-                String htmlContent1 = element1.outerHtml();
-                FileWriter writer1 = new FileWriter(fileBreakfast);
-                writer1.write(htmlContent1);
-                System.out.println("HTML content saved to: " + "tmp/result1.txt");
-                writer1.close();
-            }
+            elements = doc.select(".menu[data-table^=18-8]");
 
-            File fileLunch = new File("tmp/result2.txt"); //한빛식당 점심 메뉴 데이터
-            if (fileLunch.createNewFile());
-            Elements element2 = doc.select(".menu[data-table^=18-8]");
-            if (element2 != null) {
-                String htmlContent2 = element2.outerHtml();
-                FileWriter writer2 = new FileWriter(fileLunch);
-                writer2.write(htmlContent2);
-                System.out.println("HTML content saved to: " + "tmp/result2.txt");
-                writer2.close();
-            }
 
-            File fileDinner = new File("tmp/result3.txt"); //한빛식당 저녁 메뉴 데이터
-            if (fileDinner.createNewFile());
-            Elements element3 = doc.select(".menu[data-table^=18-10]");
-            if (element3 != null) {
-                String htmlContent3 = element3.outerHtml();
-                FileWriter writer3 = new FileWriter(fileDinner);
-                writer3.write(htmlContent3);
-                System.out.println("HTML content saved to: " + "tmp/result3.txt");
-                writer3.close();
+            //반복문의 반복 횟수(일주일은 5일이므로 5)
+            int count = 5;
+            for (Element element : elements) {
+                count--;
+
+                // Html 태그 제거, 문자열만 남김
+                String temp = element.text();
+
+                // ￦ 이후의 문자열 삭제 == 가격 정보는 표시 안함
+                int index = temp.indexOf('￦');
+                if (index != -1)
+                    temp = temp.substring(0, index);
+
+                // 남은 문자열(그 날짜의 학식)을 저장
+                weeksBreakfast[count] += temp;
+
+
+                if (count == 0) break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            //스크레이핑 실패 시 예외처리
+            Log.e("ScrapingTask", "Error scraping website", e);
         }
+        //결과 문자열 배열 return
+        return weeksBreakfast;
+    }
 
+    @Override
+    //doInBackground 이후 실행
+    //doInBackground의 return을 인수로 받게 됨
+    protected void onPostExecute(String[] result) {
+        //onScrapingComplete 메서드를 call
+        super.onPostExecute(result);
+        if (listener != null){
+            listener.onScrapingComplete(result, mealType);
+        }
+    }
+
+    public interface OnScrapingCompleteListener {
+        void onScrapingComplete(String[] result, String mealType);
     }
 }
