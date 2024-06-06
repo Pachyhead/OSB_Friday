@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity
             "", // Thursday
             "" // Friday
     };
-    List<String> list = new ArrayList<>();
-
 
 
     //저장할 파일
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WeekMenuActivity.class);
                 intent.putExtra("meals", meals);
+                //intent.putExtra("calories", totalCal);
                 startActivity(intent);
             }
         });
