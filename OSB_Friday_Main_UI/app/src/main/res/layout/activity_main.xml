@@ -12,7 +12,7 @@
         android:id="@+id/text_component_app_name"
         android:layout_width="68dp"
         android:layout_height="42dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -30,31 +30,35 @@
         android:layout_width="50dp"
         android:layout_height="44dp"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <ImageButton
             android:id="@+id/btn_user_setting"
             android:layout_width="50dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
+            android:contentDescription="setting"
             android:src="@drawable/lets_icons_setting_line"
             android:layout_gravity="center"/>
+
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="50dp"
         android:layout_height="44dp"
         android:layout_marginTop="60dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btn_component_alarm"
             android:layout_width="50dp"
-            android:layout_height="44dp"
+            android:layout_height="48dp"
+            android:contentDescription="set alarm"
             android:src="@drawable/octicon_bell_24"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            />
     </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,10 +76,12 @@
             android:id="@+id/rec1_background"
             android:layout_width="370dp"
             android:layout_height="325dp"
+            android:contentDescription="weekly menu"
             android:src="@drawable/rectangle_1_edited"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView" />
+
 
         <TextView
             android:id="@+id/textView"
@@ -84,7 +90,7 @@
             android:layout_marginTop="20dp"
             android:text="주간 식단표"
             android:textColor="#000000"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -94,6 +100,7 @@
             android:id="@+id/btn_to_Week_Menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="View more"
             android:padding="0dp"
             android:src="@drawable/mingcute_more_1_line"
             app:layout_constraintTop_toTopOf="parent"
@@ -107,7 +114,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="65dp"
-            android:layout_marginLeft="30dp">
+            android:layout_marginStart="30dp">
 
             <TextView
                 android:id="@+id/rec1_inner1"
@@ -191,6 +198,7 @@
         <ImageView
             android:layout_width="370dp"
             android:layout_height="196dp"
+            android:contentDescription="match_parent"
             android:src="@drawable/rectangle_2_edited"/>
 
         <TextView
@@ -199,7 +207,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:text="활동 대사량"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#000000"/>
     </FrameLayout>
@@ -218,6 +226,7 @@
         <ImageView
             android:layout_width="370dp"
             android:layout_height="196dp"
+            android:contentDescription="Calendar"
             android:src="@drawable/rectangle_2_edited"/>
 
         <LinearLayout
@@ -266,6 +275,7 @@
             android:id="@+id/rec4_background"
             android:layout_width="412dp"
             android:layout_height="97dp"
+            android:contentDescription="Background"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:src="@drawable/rectangle_3_edited"/>
@@ -273,15 +283,17 @@
             android:id="@+id/rec4_inner1"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="inner1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:src="@drawable/mingcute_menu_line"/>
         <ImageView
             android:id="@+id/rec4_inner2"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="inner2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -291,10 +303,11 @@
             android:id="@+id/rec4_inner3"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="inner3"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/lets_icons_back"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
