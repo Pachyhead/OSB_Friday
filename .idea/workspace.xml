@@ -18,6 +18,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7fa69484-af20-4ee6-b177-5052cc1859ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OSB_Friday_Main_UI/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/OSB_Friday_Main_UI/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OSB_Friday_Main_UI/app/src/main/java/com/example/main_ui/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/OSB_Friday_Main_UI/app/src/main/java/com/example/main_ui/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,10 +62,11 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Users/imago/AndroidStudioProjects/OSB_Friday/OSB_Friday_Main_UI/app",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2"
+    "git-widget-placeholder": "Feature__Scraping",
+    "last_opened_file_path": "C:/Users/ljh02/StudioProjects/OSB_Friday/OSB_Friday_Main_UI"
   }
 }]]></component>
   <component name="RunManager">

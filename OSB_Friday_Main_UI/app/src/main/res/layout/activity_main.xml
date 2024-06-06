@@ -144,6 +144,15 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/text_monday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Text1"
+                            app:layout_constraintStart_toEndOf="@+id/rec1_inner1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rec1_inner1"
+                            android:layout_marginStart="8dp"/>
 
                         <TextView
                             android:id="@+id/rec1_inner2"
@@ -157,6 +166,15 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/text_tuesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Text"
+                            app:layout_constraintStart_toEndOf="@+id/rec1_inner2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rec1_inner2"
+                            android:layout_marginStart="8dp"/>
 
                         <TextView
                             android:id="@+id/rec1_inner3"
@@ -170,6 +188,15 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/text_wednesday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Text3"
+                            app:layout_constraintStart_toEndOf="@+id/rec1_inner3"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rec1_inner3"
+                            android:layout_marginStart="8dp"/>
 
                         <TextView
                             android:id="@+id/rec1_inner4"
@@ -183,6 +210,15 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/text_thursday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Text4"
+                            app:layout_constraintStart_toEndOf="@+id/rec1_inner4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rec1_inner4"
+                            android:layout_marginStart="8dp"/>
 
                         <TextView
                             android:id="@+id/rec1_inner5"
@@ -196,6 +232,15 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/text_friday"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="Your Text5"
+                            app:layout_constraintStart_toEndOf="@+id/rec1_inner5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/rec1_inner5"
+                            android:layout_marginStart="8dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

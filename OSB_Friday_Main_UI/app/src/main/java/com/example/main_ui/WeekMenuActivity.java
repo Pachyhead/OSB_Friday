@@ -1,5 +1,6 @@
 package com.example.main_ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WeekMenuActivity extends AppCompatActivity {
 
@@ -21,7 +26,9 @@ public class WeekMenuActivity extends AppCompatActivity {
             R.id.Weekly_Menu_Thursday_list,
             R.id.Weekly_Menu_Friday_list
     };
-    private ArrayAdapter<String>[] menuAdapters = new ArrayAdapter[5];
+    private MenuAdapter[] menuAdapters = new MenuAdapter[5];
+    private String[][] meals = new String[5][];
+    private String[][] calories = new String[5][];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +41,62 @@ public class WeekMenuActivity extends AppCompatActivity {
             return insets;
         });
 
-        String[] meals = {
-                "Pasta Salad Soup Bread", // Monday
-                "Chicken Rice Beans Dessert", // Tuesday
-                "Fish Chips Peas", // Wednesday
-                "Beef MashedPotatoes Gravy Pie", // Thursday
-                "Pizza Fries Soda IceCream" // Friday
-        };
+        Intent intent = getIntent();
+        String[] mealsArray = intent.getStringArrayExtra("meals");
+        String[] caloriesArray = intent.getStringArrayExtra("calories");
+        // Initialize meals and calories arrays with default values
+        meals[0] = new String[]{"Pasta", "Salad", "Soup", "Bread"}; // Monday
+        calories[0] = new String[]{"400", "150", "100", "200"}; // Monday
 
-        String[][] menuDatabase = new String[5][];
-        for (int i = 0; i < meals.length; i++) {
-            menuDatabase[i] = meals[i].split(" ");
-        }
+        meals[1] = new String[]{"Chicken", "Rice", "Beans", "Dessert"}; // Tuesday
+        calories[1] = new String[]{"450", "200", "150", "300"}; // Tuesday
+
+        meals[2] = new String[]{"Fish", "Chips", "Peas", "Tart"}; // Wednesday
+        calories[2] = new String[]{"500", "250", "100", "350"}; // Wednesday
+
+        meals[3] = new String[]{"Beef", "MashedPotatoes", "Gravy", "Pie"}; // Thursday
+        calories[3] = new String[]{"600", "300", "100", "400"}; // Thursday
+
+         meals[4] = new String[]{"Pizza", "Fries", "Soda", "IceCream"}; // Friday
+        calories[4] = new String[]{"700", "350", "150", "500"}; // Friday
 
         for (int i = 0; i < 5; i++) {
+            if(mealsArray == null ) break;
+            meals[i] = mealsArray[i].split(" ");
+        }
+        for (int i = 0; i < 5; i++) {
             weekMenuListArr[i] = findViewById(menuListViewIds[i]);
-            menuAdapters[i] = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1, menuDatabase[i]);
+            List<MenuItem> menuItems = new ArrayList<>();
+            for (int j = 0; j < meals[i].length; j++) {
+                menuItems.add(new MenuItem(meals[i][j], calories[i][j]));
+            }
+            menuAdapters[i] = new MenuAdapter(this, menuItems);
             weekMenuListArr[i].setAdapter(menuAdapters[i]);
+        }
+    }
+
+    // Function to update the meals and calories arrays and refresh the ListView elements
+    public void updateMeals(String[] newMeals, String[] newCalories) {
+        if (newMeals.length != 5 || newCalories.length != 5) {
+            throw new IllegalArgumentException("Meals and calories arrays must contain exactly 5 elements each.");
+        }
+        for (int i = 0; i < 5; i++) {
+            meals[i] = newMeals[i].split(" ");
+            calories[i] = newCalories[i].split(" ");
+            List<MenuItem> updatedMenuItems = new ArrayList<>();
+            for (int j = 0; j < meals[i].length; j++) {
+                updatedMenuItems.add(new MenuItem(meals[i][j], calories[i][j]));
+            }
+            updateMenuListData(i, updatedMenuItems);
+        }
+    }
+
+    private void updateMenuListData(int index, List<MenuItem> newData) {
+        if (index >= 0 && index < menuAdapters.length) {
+            MenuAdapter adapter = menuAdapters[index];
+            adapter.clear();
+            adapter.addAll(newData);
+            adapter.notifyDataSetChanged();
         }
     }
 }
