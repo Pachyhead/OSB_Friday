@@ -16,14 +16,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import com.example.main_ui.Scraping; // 스크레이핑 import
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity
         implements Scraping.OnScrapingCompleteListener,
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, WeekMenuActivity.class);
                 intent.putExtra("meals", meals);
                 startActivity(intent);
-
             }
         });
 
@@ -102,18 +100,26 @@ public class MainActivity extends AppCompatActivity
 
         });
         ImageButton btnUserSetting = findViewById(R.id.btn_user_setting);
-
         btnUserSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 디버깅용: 버튼 클릭시 유저 정보 토스트
+                Properties userInfo = loadUserInfo();
+                if (userInfo.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "No user info found", Toast.LENGTH_SHORT).show();
+                } else {
+                    StringBuilder userInfoString = new StringBuilder();
+                    for (String key : userInfo.stringPropertyNames()) {
+                        userInfoString.append(key).append(": ").append(userInfo.getProperty(key)).append("\n");
+                    }
+                    showUserInfoDialog(userInfoString.toString());
+                }
+
                 Intent intent = new Intent(MainActivity.this, ActivityUserInfo.class);
                 startActivity(intent);
             }
         });
     }
-
-
-
     // 스크래이핑 결과를 각각의 변수에 넘김.
     @Override
     public void onScrapingComplete(String[] result, String mealType) {
@@ -132,5 +138,26 @@ public class MainActivity extends AppCompatActivity
         menuFileManager.saveToFile(CAL_FILE, stringBuilder.toString());
 
     }
-}
+    private Properties loadUserInfo() {
+        Properties properties = new Properties();
+        try (FileInputStream fis = openFileInput("user_info.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return properties;
+    }
 
+    private void showUserInfoDialog(String userInfo) {
+        new AlertDialog.Builder(this)
+                .setTitle("User Info")
+                .setMessage(userInfo)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+}
