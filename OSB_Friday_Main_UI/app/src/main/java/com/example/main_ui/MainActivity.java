@@ -34,6 +34,13 @@ import com.example.main_ui.Scraping; // 스크레이핑 import
 public class MainActivity extends AppCompatActivity implements Scraping.OnScrapingCompleteListener{
     private TextView[] menuTextViews;
     private MenuFileManager menuFileManager;
+    private String[] meals = {
+            "", // Monday
+            "", // Tuesday
+            "", // Wednesday
+            "", // Thursday
+            "" // Friday
+    };
 
     //저장할 파일
     private static final String LUNCH_FILE = "lunch_menu.txt";
@@ -54,9 +61,12 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WeekMenuActivity.class);
+                intent.putExtra("meals", meals);
                 startActivity(intent);
+
             }
         });
+
 
 
         //메뉴 출력을 위한 각각의 레이아웃 불러오기
@@ -78,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements Scraping.OnScrapi
             String[] menu = result.split("\n");
             for (int i = 0; i < menuTextViews.length; i++) {
                 menuTextViews[i].setText(menu.length > i ? menu[i] : "");
+                MainActivity.this.meals = menu;
             }
         });
         ImageButton btnUserSetting = findViewById(R.id.btn_user_setting);
+
         btnUserSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,6 @@
 package com.example.main_ui;
 
 import android.os.Bundle;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -34,13 +33,18 @@ public class WeekMenuActivity extends AppCompatActivity {
             return insets;
         });
 
-        String[] meals = {
-                "Pasta Salad Soup Bread", // Monday
-                "Chicken Rice Beans Dessert", // Tuesday
-                "Fish Chips Peas", // Wednesday
-                "Beef MashedPotatoes Gravy Pie", // Thursday
-                "Pizza Fries Soda IceCream" // Friday
-        };
+        // Retrieve the meals data from the intent
+        String[] meals = getIntent().getStringArrayExtra("meals");
+
+        if (meals == null) {
+            meals = new String[] {
+                    "Pasta Salad Soup Bread", // Monday
+                    "Chicken Rice Beans Dessert", // Tuesday
+                    "Fish Chips Peas", // Wednesday
+                    "Beef MashedPotatoes Gravy Pie", // Thursday
+                    "Pizza Fries Soda IceCream" // Friday
+            };
+        }
 
         String[][] menuDatabase = new String[5][];
         for (int i = 0; i < meals.length; i++) {

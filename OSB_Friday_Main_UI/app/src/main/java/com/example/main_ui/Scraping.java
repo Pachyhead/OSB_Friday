@@ -24,13 +24,12 @@ public class Scraping extends AsyncTask<Void, Void, String[]> {
     @Override
     //백그라운드에서 실행되는 메소드
     protected String[] doInBackground(Void... voids) {
-        //요일별 아침 정보 저장하기 위한 String 배열
-        String[] weeksBreakfast = new String[]{"", "", "", "", ""};
+        //요일별 정보 저장하기 위한 String 배열
+        String[] weeksLunchMenu = new String[]{"", "", "", "", ""};
         try {
             // 학식 사이트 스크레이핑
             Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get();
             Elements elements = null;
-            //[data-table이 18-9로 시작하는, 아침 정보만 저장
 
             elements = doc.select(".menu[data-table^=18-8]");
 
@@ -49,7 +48,7 @@ public class Scraping extends AsyncTask<Void, Void, String[]> {
                     temp = temp.substring(0, index);
 
                 // 남은 문자열(그 날짜의 학식)을 저장
-                weeksBreakfast[count] += temp;
+                weeksLunchMenu[count] += temp;
 
 
                 if (count == 0) break;
@@ -59,7 +58,7 @@ public class Scraping extends AsyncTask<Void, Void, String[]> {
             Log.e("ScrapingTask", "Error scraping website", e);
         }
         //결과 문자열 배열 return
-        return weeksBreakfast;
+        return weeksLunchMenu;
     }
 
     @Override
