@@ -1,26 +1,19 @@
 package com.example.main_ui;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;

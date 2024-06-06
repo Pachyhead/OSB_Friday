@@ -3,9 +3,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#FFE6E6"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    tools:ignore="DuplicateIds">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -287,7 +291,6 @@
                     <ImageView
                         android:layout_width="370dp"
                         android:layout_height="match_parent"
-                        android:scaletype="fitXY"
                         android:background="#ffffff"
                         android:contentDescription="Calendar"
                         android:src="@drawable/rectangle_1_edited" />
@@ -330,8 +333,8 @@
 
         <ImageView
             android:id="@+id/rec4_background"
-            android:layout_width="412dp"
-            android:layout_height="97dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/rectangle_3_edited"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -340,7 +343,7 @@
             android:id="@+id/rec4_inner1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:src="@drawable/mingcute_menu_line"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -367,5 +370,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>
