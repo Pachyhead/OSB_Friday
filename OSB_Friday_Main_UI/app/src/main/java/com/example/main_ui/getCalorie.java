@@ -36,6 +36,10 @@ public class getCalorie {
             //fatsecret url에 검색 결과가 나오게 붙임
             try {
                 for (int i = 0; i < weekMenu.length; i++) {
+                    if(weekMenu[i].equals("미운영(휴무)")) {
+                        totalCal[i] = "정보 없음";
+                        continue;
+                    }
                     String searchUrl = gettingUrl + weekMenu[i];
                     Document doc = Jsoup.connect(searchUrl).get();
                     Element element = doc.select("div.smallText.greyText.greyLink").first();
