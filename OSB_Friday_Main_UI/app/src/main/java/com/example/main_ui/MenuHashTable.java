@@ -15,6 +15,7 @@ public class MenuHashTable {
 
     public MenuHashTable(Context context, String fileName) {
         menuMap = new HashMap<>();
+        loadFromAssets(context, fileName);
     }
 
     // 키-값 쌍을 설정하는 함수
@@ -52,5 +53,27 @@ public class MenuHashTable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // input 음식 이름의 맨 뒷 음절을 temp에 추가하며 매칭된 값을 찾는 함수
+    public String findMatchingValue(String input) {
+        String temp = "";
+        String lastMatchedValue = null;
+
+        // HashMap의 value 목록 가져오기
+        for (int i = input.length() - 1; i >= 0; i--) {
+            // temp에 현재 문자를 추가
+            temp = input.charAt(i) + temp;
+
+            // temp가 HashMap의 value 목록에 존재하는지 확인
+            for (String value : menuMap.values()) {
+                if (value.equals(temp)) {
+                    lastMatchedValue = value;
+                }
+            }
+        }
+
+        // 마지막으로 체크된 value 반환
+        return lastMatchedValue;
     }
 }
