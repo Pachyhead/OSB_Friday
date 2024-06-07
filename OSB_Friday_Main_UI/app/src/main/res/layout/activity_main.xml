@@ -153,7 +153,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Your Text1"
-                            android:textSize="20dp"
+
                             app:layout_constraintStart_toEndOf="@+id/rec1_inner1"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rec1_inner1"
@@ -177,7 +177,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Your Text"
-                            android:textSize="20dp"
+
                             app:layout_constraintStart_toEndOf="@+id/rec1_inner2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rec1_inner2"
@@ -201,7 +201,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Your Text3"
-                            android:textSize="20dp"
+
                             app:layout_constraintStart_toEndOf="@+id/rec1_inner3"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rec1_inner3"
@@ -225,7 +225,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Your Text4"
-                            android:textSize="20dp"
+
                             app:layout_constraintStart_toEndOf="@+id/rec1_inner4"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rec1_inner4"
@@ -249,7 +249,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Your Text5"
-                            android:textSize="20dp"
+
                             app:layout_constraintStart_toEndOf="@+id/rec1_inner5"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/rec1_inner5"
