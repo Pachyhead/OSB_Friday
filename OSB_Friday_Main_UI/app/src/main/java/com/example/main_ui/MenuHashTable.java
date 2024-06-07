@@ -1,6 +1,12 @@
 package com.example.main_ui;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.HashMap;
 
@@ -28,5 +34,23 @@ public class MenuHashTable {
     // 메뉴 맵을 반환하는 함수 (디버깅용)
     public HashMap<String, String> getMenuMap() {
         return menuMap;
+    }
+
+    // assets 디렉토리에서 파일을 읽어오는 함수
+    private void loadFromAssets(Context context, String fileName) {
+        AssetManager assetManager = context.getAssets();
+        try (InputStream is = assetManager.open(fileName);
+             InputStreamReader isr = new InputStreamReader(is);
+             BufferedReader reader = new BufferedReader(isr)) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length == 2) {
+                    setMenu(parts[0], parts[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
