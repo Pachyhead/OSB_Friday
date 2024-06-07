@@ -19,4 +19,14 @@ public class MenuHashTable {
         menuMap.put(key, value);
         return true;
     }
+
+    // 키를 입력받아 값을 반환하는 함수
+    public String getMenu(String key) {
+        return menuMap.get(key);
+    }
+
+    // 메뉴 맵을 반환하는 함수 (디버깅용)
+    public HashMap<String, String> getMenuMap() {
+        return menuMap;
+    }
 }
