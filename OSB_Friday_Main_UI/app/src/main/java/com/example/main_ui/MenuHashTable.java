@@ -10,4 +10,13 @@ public class MenuHashTable {
     public MenuHashTable(Context context, String fileName) {
         menuMap = new HashMap<>();
     }
+
+    // 키-값 쌍을 설정하는 함수
+    public boolean setMenu(String key, String value) {
+        if (key == null || value == null) {
+            return false;
+        }
+        menuMap.put(key, value);
+        return true;
+    }
 }
