@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
+import android.Manifest;
+import android.content.pm.PackageManager;
 
 public class AlarmReceiver extends BroadcastReceiver {
     private static final String CHANNEL_ID = "LunchMenuChannel";
@@ -38,6 +41,16 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(0, builder.build());
+
+        // Check for POST_NOTIFICATIONS permission
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            try {
+                notificationManager.notify(0, builder.build());
+            } catch (SecurityException e) {
+                Log.e(TAG, "Permission for notifications not granted.", e);
+            }
+        } else {
+            Log.e(TAG, "POST_NOTIFICATIONS permission not granted.");
+        }
     }
 }
