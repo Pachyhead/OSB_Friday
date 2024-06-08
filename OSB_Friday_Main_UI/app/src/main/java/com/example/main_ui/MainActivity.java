@@ -1,9 +1,16 @@
 package com.example.main_ui;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
@@ -13,14 +20,22 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements Scraping.OnScrapingCompleteListener,
         getCalorie.getCalCompleteListener{
+    private static final int REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION = 1;
+    private static final int REQUEST_POST_NOTIFICATIONS_PERMISSION = 2;
+    private static final String TAG = "MainActivity";
     private TextView[] menuTextViews;
     private MenuFileManager menuFileManager;
 
@@ -88,9 +103,64 @@ public class MainActivity extends AppCompatActivity
 
         //저장된 파일을 읽어 출력
        loadAndShowMenu(LUNCH_FILE);
-
-
+        meals = loadMealsFromFile();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (!getSystemService(AlarmManager.class).canScheduleExactAlarms()) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivityForResult(intent, REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION);
+            } else {
+                // Check and request the POST_NOTIFICATIONS permission if needed
+                checkAndRequestNotificationPermission();
+            }
+        } else {
+            // Check and request the POST_NOTIFICATIONS permission if needed
+            checkAndRequestNotificationPermission();
+        }
     }
+    private void checkAndRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_POST_NOTIFICATIONS_PERMISSION);
+            } else {
+                // Schedule immediate alarms for testing
+                AlarmScheduler.scheduleAlarms(this, meals);
+            }
+        } else {
+            // Schedule immediate alarms for testing
+            AlarmScheduler.scheduleAlarms(this, meals);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_POST_NOTIFICATIONS_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, schedule alarms
+                AlarmScheduler.scheduleAlarms(this, meals);
+            } else {
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                if (getSystemService(AlarmManager.class).canScheduleExactAlarms()) {
+                    Toast.makeText(this, "Exact alarm permission granted", Toast.LENGTH_SHORT).show();
+                    // Check and request the POST_NOTIFICATIONS permission if needed
+                    checkAndRequestNotificationPermission();
+                } else {
+                    Toast.makeText(this, "Exact alarm permission denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
     //메뉴 출력
     private void loadAndShowMenu(String fileName) {
         menuFileManager.loadFromFile(fileName, result -> {
@@ -165,5 +235,20 @@ public class MainActivity extends AppCompatActivity
                     }
                 })
                 .show();
+    }
+
+    private String[] loadMealsFromFile() {
+        String[] meals = new String[5];
+        try {
+            FileInputStream fis = openFileInput("lunch_menu.txt");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            for (int i = 0; i < 5; i++) {
+                meals[i] = reader.readLine();
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return meals;
     }
 }
