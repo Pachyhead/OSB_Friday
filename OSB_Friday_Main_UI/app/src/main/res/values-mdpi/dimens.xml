@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <dimen name="gridMargin" value="200dp" />
+    <dimen name="gridWidth" value="200dp" />
+    <dimen name="gridHeight" value="200dp" />
+
+    <dimen name="textSize" value="20sp" />
+</resources>

@@ -70,8 +70,6 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.jsoup)
     implementation(libs.junit)
-    implementation(libs.places)
-    implementation(libs.threetenabp)
     implementation(files("libs\\jsoup-1.17.2.jar"))
     testImplementation("org.mockito:mockito-core:3.11.2")
     testImplementation(libs.junit)
