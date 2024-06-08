@@ -17,7 +17,13 @@ public class WeekMenuActivityTest {
 
     private ActivityScenario<WeekMenuActivity> scenario;
 
-    private final String[][] expectedMeals = {};
+    private final String[][] expectedMeals = {
+            {"Pasta", "Salad", "Soup", "Bread"},
+            {"Chicken", "Rice", "Beans", "Dessert"},
+            {"Fish", "Chips", "Peas", "Tart"},
+            {"Beef", "MashedPotatoes", "Gravy", "Pie"},
+            {"Pizza", "Fries", "Soda", "IceCream"}
+    };
 
     @Before
     public void setUp() {
