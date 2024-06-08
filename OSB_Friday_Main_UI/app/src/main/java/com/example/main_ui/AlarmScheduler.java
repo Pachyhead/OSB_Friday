@@ -20,12 +20,25 @@ public class AlarmScheduler {
             return;
         }
 
+        Calendar now = Calendar.getInstance();
         for (int day = Calendar.MONDAY; day <= Calendar.FRIDAY; day++) {
+            if ("미운영(휴무) ".equals(meals[day - Calendar.MONDAY])) {
+                Log.d(TAG, "Skipping alarm for day " + day + " because the menu is 휴무.");
+                continue;
+            }
+
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.DAY_OF_WEEK, day);
             calendar.set(Calendar.HOUR_OF_DAY, 11);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            // Check if the alarm time is in the past
+            if (calendar.before(now)) {
+                Log.d(TAG, "Skipping alarm for day " + day + " because the time is in the past.");
+                continue;
+            }
 
             Intent intent = new Intent(context, AlarmReceiver.class);
             intent.putExtra("menu", meals[day - Calendar.MONDAY]);
