@@ -20,12 +20,14 @@
         android:id="@+id/input_gender"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_gender"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:autofillHints="Enter Gender"
+        android:gravity="center"
         android:hint="Enter Gender"
-        android:gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_gender"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_weight"
@@ -41,12 +43,14 @@
         android:id="@+id/input_weight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_weight"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:autofillHints="Enter Weight"
+        android:gravity="center"
         android:hint="Enter Weight"
-        android:gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_weight"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_height"
@@ -63,12 +67,14 @@
         android:id="@+id/input_height"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:autofillHints="Enter Height"
+        android:gravity="center"
         android:hint="Enter Height"
-        android:gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_height"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_age"
@@ -84,12 +90,14 @@
         android:id="@+id/input_age"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_age"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:autofillHints="Enter Age"
+        android:gravity="center"
         android:hint="Enter Age"
-        android:gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_age"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_activity_level"
@@ -105,12 +113,14 @@
         android:id="@+id/input_activity_level"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/text_activity_level"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
+        android:autofillHints="Enter Activity Level"
+        android:gravity="center"
         android:hint="Enter Activity Level"
-        android:gravity="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_activity_level"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/btn_save"
