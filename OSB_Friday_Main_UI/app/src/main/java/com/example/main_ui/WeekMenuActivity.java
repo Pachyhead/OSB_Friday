@@ -18,8 +18,8 @@ import java.util.List;
 
 public class WeekMenuActivity extends AppCompatActivity {
 
-    private ListView[] weekMenuListArr = new ListView[5];
-    private int[] menuListViewIds = {
+    public ListView[] weekMenuListArr = new ListView[5];
+    public int[] menuListViewIds = {
             R.id.Weekly_Menu_Monday_list,
             R.id.Weekly_Menu_Tuesday_list,
             R.id.Weekly_Menu_Wednesday_list,
