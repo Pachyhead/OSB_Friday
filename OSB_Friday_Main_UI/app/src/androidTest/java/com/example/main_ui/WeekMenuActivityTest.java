@@ -73,4 +73,19 @@ public class WeekMenuActivityTest {
             }
         });
     }
+    @Test
+    public void testMondayMenu() {
+        scenario.onActivity(activity -> {
+            // 월요일의 메뉴 항목이 올바르게 설정되었는지 확인합니다
+            ListView listView = activity.findViewById(R.id.Weekly_Menu_Monday_list);
+            MenuAdapter adapter = (MenuAdapter) listView.getAdapter();
+            String[] expectedMondayMenu = {"Pasta", "Salad", "Soup", "Bread"};
+
+            // 월요일의 각 메뉴 항목이 예상된 값과 일치하는지 확인합니다
+            for (int i = 0; i < expectedMondayMenu.length; i++) {
+                MenuItem menuItem = (MenuItem) adapter.getItem(i);
+                assertEquals("Monday menu item should match expected value", expectedMondayMenu[i], menuItem.getItem());
+            }
+        });
+    }
 }
