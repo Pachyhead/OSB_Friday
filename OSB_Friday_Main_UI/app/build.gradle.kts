@@ -4,8 +4,10 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.main_ui"
     compileSdk = 34
+
 
     defaultConfig {
         applicationId = "com.example.main_ui"

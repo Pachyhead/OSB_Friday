@@ -1,9 +1,18 @@
 package com.example.main_ui;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
@@ -13,14 +22,24 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements Scraping.OnScrapingCompleteListener,
         getCalorie.getCalCompleteListener{
+    private static final int REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION = 1;
+    private static final int REQUEST_POST_NOTIFICATIONS_PERMISSION = 2;
+    private static final String TAG = "MainActivity";
+    private static final String PREFS_NAME = "AlarmPrefs";
+    private static final String ALARM_ENABLED_KEY = "alarmEnabled";
     private TextView[] menuTextViews;
     private MenuFileManager menuFileManager;
 
@@ -35,11 +54,15 @@ public class MainActivity extends AppCompatActivity
 
     CalendarView cal;
     TextView tv_text;
-
+    //알람 버튼
+    ImageButton btnComponentAlarm;
+    //알람 on, off
+    private boolean isAlarmEnabled;
 
     //저장할 파일
     private static final String LUNCH_FILE = "lunch_menu.txt";
     private static final String CAL_FILE = "calorie.txt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +71,7 @@ public class MainActivity extends AppCompatActivity
 
         cal = findViewById(R.id.cal);
         tv_text = findViewById(R.id.tv_text);
+        btnComponentAlarm = findViewById(R.id.btn_component_alarm);
 
         cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -55,9 +79,25 @@ public class MainActivity extends AppCompatActivity
                 tv_text.setText(year + "년 " + month + "월 " + day + "일");
             }
         });
+        // Load preferences
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        isAlarmEnabled = prefs.getBoolean(ALARM_ENABLED_KEY, false);
+        updateAlarmButton();
 
+        // Handle alarm button click
+        btnComponentAlarm.setOnClickListener(v -> {
+            isAlarmEnabled = !isAlarmEnabled;
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(ALARM_ENABLED_KEY, isAlarmEnabled);
+            editor.apply();
+            updateAlarmButton();
+            if (isAlarmEnabled) {
+                checkAndRequestNotificationPermission();
+            } else {
+                cancelAlarms();
+            }
+        });
         //파일 읽고 쓰기
-
         menuFileManager = new MenuFileManager(this);
         //스크레이핑
         new Scraping(this, "lunch").execute();
@@ -89,8 +129,23 @@ public class MainActivity extends AppCompatActivity
         //저장된 파일을 읽어 출력
        loadAndShowMenu(LUNCH_FILE);
 
+        meals = loadMealsFromFile();
 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (!getSystemService(AlarmManager.class).canScheduleExactAlarms()) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                startActivityForResult(intent, REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION);
+            } else {
+                // Check and request the POST_NOTIFICATIONS permission if needed
+                checkAndRequestNotificationPermission();
+            }
+        } else {
+            // Check and request the POST_NOTIFICATIONS permission if needed
+            checkAndRequestNotificationPermission();
+        }
     }
+
     //메뉴 출력
     private void loadAndShowMenu(String fileName) {
         menuFileManager.loadFromFile(fileName, result -> {
@@ -165,5 +220,80 @@ public class MainActivity extends AppCompatActivity
                     }
                 })
                 .show();
+    }
+    private void updateAlarmButton() {
+        if (isAlarmEnabled) {
+            btnComponentAlarm.setImageResource(R.drawable.ic_alarm_on); // Set to alarm on icon
+        } else {
+            btnComponentAlarm.setImageResource(R.drawable.octicon_bell_24); // Set to alarm off icon
+        }
+    }
+
+    private void cancelAlarms() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        for (int day = Calendar.MONDAY; day <= Calendar.FRIDAY; day++) {
+            Intent intent = new Intent(this, AlarmReceiver.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, day, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+            if (alarmManager != null) {
+                alarmManager.cancel(pendingIntent);
+                Log.d(TAG, "Alarm cancelled for day " + day);
+            }
+        }
+    }
+
+    private void checkAndRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_POST_NOTIFICATIONS_PERMISSION);
+            } else {
+                AlarmScheduler.scheduleAlarms(this, meals);
+            }
+        } else {
+            AlarmScheduler.scheduleAlarms(this, meals);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_POST_NOTIFICATIONS_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                AlarmScheduler.scheduleAlarms(this, meals);
+            } else {
+                Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SCHEDULE_EXACT_ALARM_PERMISSION) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (getSystemService(AlarmManager.class).canScheduleExactAlarms()) {
+                    Toast.makeText(this, "Exact alarm permission granted", Toast.LENGTH_SHORT).show();
+                    checkAndRequestNotificationPermission();
+                } else {
+                    Toast.makeText(this, "Exact alarm permission denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+    private String[] loadMealsFromFile() {
+        String[] meals = new String[5];
+        try {
+            FileInputStream fis = openFileInput(LUNCH_FILE);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            for (int i = 0; i < 5; i++) {
+                meals[i] = reader.readLine();
+                Log.d(TAG, "Loaded meal for day " + i + ": " + meals[i]);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return meals;
     }
 }
