@@ -302,11 +302,6 @@
                         android:padding="20dp"
                         tools:context=".MainActivity">
 
-                        <CalendarView
-                            android:id="@+id/cal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
                         <TextView
                             android:id="@+id/tv_text"
                             android:layout_width="match_parent"
@@ -314,6 +309,10 @@
                             android:gravity="center"
                             android:text="날짜를 선택해주세요" />
 
+                        <CalendarView
+                            android:id="@+id/cal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 

@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity
                 tv_text.setText(year + "년 " + month + "월 " + day + "일");
             }
         });
+
         // Load preferences
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         isAlarmEnabled = prefs.getBoolean(ALARM_ENABLED_KEY, false);
