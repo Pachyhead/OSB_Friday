@@ -1,25 +1,19 @@
 package com.example.main_ui;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import java.util.ArrayList;
-import java.util.List;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -39,6 +33,9 @@ public class MainActivity extends AppCompatActivity
             "" // Friday
     };
 
+    CalendarView cal;
+    TextView tv_text;
+
 
     //저장할 파일
     private static final String LUNCH_FILE = "lunch_menu.txt";
@@ -48,6 +45,16 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        cal = findViewById(R.id.cal);
+        tv_text = findViewById(R.id.tv_text);
+
+        cal.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day) {
+                tv_text.setText(year + "년 " + month + "월 " + day + "일");
+            }
+        });
 
         //파일 읽고 쓰기
 
