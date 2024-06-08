@@ -24,22 +24,15 @@ public class Scraping extends AsyncTask<Void, Void, String[]> {
     @Override
     //백그라운드에서 실행되는 메소드
     protected String[] doInBackground(Void... voids) {
-        //요일별 아침 정보 저장하기 위한 String 배열
+        //요일별 정보 저장하기 위한 String 배열
         String[] weeksBreakfast = new String[]{"", "", "", "", ""};
         try {
             // 학식 사이트 스크레이핑
             Document doc = Jsoup.connect("https://www.cbnucoop.com/service/restaurant/").get();
             Elements elements = null;
-            //[data-table이 18-9로 시작하는, 아침 정보만 저장
-            if (mealType.equals("breakfast")) {
-                elements = doc.select(".menu[data-table^=18-9]");
-            }
-             if (mealType.equals("lunch")){
-                elements = doc.select(".menu[data-table^=18-8]");
-            }
-            if (mealType.equals("dinner")){
-                elements = doc.select(".menu[data-table^=18-10]");
-            }
+
+            elements = doc.select(".menu[data-table^=18-8]");
+
 
             //반복문의 반복 횟수(일주일은 5일이므로 5)
             int count = 5;
